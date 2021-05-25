@@ -1,0 +1,100 @@
+Jaký datový typ se používá pro celá čísla?
+a
+a) integer
+b) char
+c) double
+Jaký datový typ se používá pro logickou hodnotu?
+c
+a) char
+b) string
+c) boolean
+Jaký datový typ se používá pro textové řetězce?
+b
+a) char
+b) string
+c) long
+Jakému datovému typu se říká zásobník?
+c
+a) FIFO
+b) Halda
+c) LIFO
+Jak se v programovacím jazyce JAVA označuje dynamické pole?
+a
+a) ArrayList
+b) HashMap
+c) [] 
+Která z těchto složitostí se by se dala označit za nejhorší?
+b
+a) (N log N)
+b) O(N!)
+c) O(N^2)
+Která z těchto složitostí se by se dala označit za nejlepší?
+c
+a) (N log N)
+b) O(N)
+c) O(log N)
+Která z těchto označení složitosti odpovídá lineární logaritmické složitosti?
+a
+a) (N log N)
+b) O(N)
+c) O(log N)
+Která z těchto označení složitosti odpovídá kubické složitosti?
+b
+a) O(N^2)
+b) O(N^3)
+c) O(N!)
+O jakém z těchto třídích algoritmu se dá říct, že je vyleppšením algoritmu BubbleSort?
+c
+a) QuickSort
+b) BogoSort
+c) ShakerSort
+Jaké z následujících tvrzení neplatí o vnitřní paměti PC?
+c
+a) procesor k ní má přímý přístup
+b) při vypnutí PC ztratí svůj obsah
+c) je určená k trvalému ukládání dat
+Jaké z následujících tvrzení o binárním vyhledávání je pravdivé?
+a
+a) Pracuje na principu půleni intervalu
+b) má složitost O(N)
+c) Pracuje zejména na neseřazené množině dat
+Jaké z následujících tvrzení o lineárním vyhledávání není pravdivé?
+b
+a) Postupně se prochází každý prvek z množiny (S), dokud se nenajde daný prvek (K)
+b) má složitost (N log N)
+c) Pracuje zejména na neseřazené množině dat
+Jaké tvrzení neplatí o statickém poli (Array)
+c
+a) položky se vzájemně rozlišují pomocí indexu
+b) mezi položkami dat a hodnotami indexů existuje jednoznačné přiřazení
+c) Velikost pole se může během používání různě měnit
+Která z následucích možností není příklad vnější paměti
+b
+a) optické disky (CD, DVD, Blu-ray)
+b) RAM paměti
+c) magnetické pásky
+Jakému datovému typu se říká fronta?
+a
+a) FIFO
+b) Halda
+c) LIFO
+Co z následujících vlastností fronta není?
+c
+a) lineární
+b) dynamická
+c) statická
+Jaká je hlavní výhoda dynamického pole oproti statickému?
+b
+a) má větší velikost než statické pole
+b) eliminuje základní nedostatek pole, kterým je fixní velikost
+c) žádná
+Kterému z těchto třídích algoritmu se také říká RandomSort, monkeySort nebo stupidSort
+a
+a) BogoSort
+b) ShakerSort
+c) BubbleSort
+Který třídící algoritmus funguje na principu tzv. "problublávání"
+c
+a) BogoSort
+b) SelectSort 
+c) BubbleSort
