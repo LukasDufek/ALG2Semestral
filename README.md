@@ -8,9 +8,9 @@ Hlavní funkcí programu ALDtest je zadání testu s 10ti otázkami a následně
 1. Načíst test
 2. Načíst studenty
 3. Psát test
-    * Přidat nového studenta
-    * Zadat mu test
-    * Vyhodnotit test pro daného studenta
-    * Přidat studenta k ostatním
+    1. Přidat nového studenta
+    2. Zadat mu test
+    3. Vyhodnotit test pro daného studenta
+    4. Přidat studenta k ostatním
 4.Zobrazit všechny studenty
 
