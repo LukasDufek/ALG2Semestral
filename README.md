@@ -25,7 +25,7 @@ Hlavní funkcí programu ALDtest je zadání testu s 10ti otázkami a následně
    * Soubor s otázkami (OtazkyALG2Semestral.txt):  
    Proměnné: question, correctAnswer, answerA, answerB a answerC, jsou datového typu string a            následně uložené do Dynamického pole
    Čtení dat probíhá podle řádků nikoli pomocí oddělovače
-   * Soubor se studenty (StudentiALGSemestral.csv): (<-- two spaces)
+   * Soubor se studenty (StudentiALGSemestral.csv): <br/>
       Proměnné: ID (5ti místné), rocnik (1 místné) a hodnoceni(1 místné), jsou datového typu int 
       Proměnné: jmeno a prijmeni, jsou datového typu string 
       Proměnná denTestu je datového typu LocalDate
