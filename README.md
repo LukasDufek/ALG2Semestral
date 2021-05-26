@@ -12,10 +12,10 @@ Hlavní funkcí programu ALDtest je zadání testu s 10ti otázkami a následně
     * Zadat mu test
     * Vyhodnotit test pro daného studenta
     * Přidat studenta k ostatním
-4.Zobrazit všechny studenty
-5.Seřadit studenty podle hodnocení
-6.Seřadit studenty podle přijmení
-7.Seřadit studenty podle ročníku
-8.Zobrazit všechny otázky
-9.Exportovat otázky do pdf souboru
+4.    Zobrazit všechny studenty
+5.    Seřadit studenty podle hodnocení
+6.    Seřadit studenty podle přijmení
+7.    Seřadit studenty podle ročníku
+8.    Zobrazit všechny otázky
+9.    Exportovat otázky do pdf souboru
 10.	Hledat zadaný výraz a jeho počet výskytů v otázkách
