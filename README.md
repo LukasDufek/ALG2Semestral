@@ -25,15 +25,18 @@ Hlavní funkcí programu ALDtest je zadání testu s 10ti otázkami a následně
    * Soubor s otázkami (OtazkyALG2Semestral.txt):  
    Proměnné: question, correctAnswer, answerA, answerB a answerC, jsou datového typu string a            následně uložené do Dynamického pole
    Čtení dat probíhá podle řádků nikoli pomocí oddělovače
-   * Soubor se studenty (StudentiALGSemestral.csv):
+   * Soubor se studenty (StudentiALGSemestral.csv): (<-- two spaces)
       Proměnné: ID (5ti místné), rocnik (1 místné) a hodnoceni(1 místné), jsou datového typu int 
       Proměnné: jmeno a prijmeni, jsou datového typu string 
       Proměnná denTestu je datového typu LocalDate
       Všechny proměnné jsou následně uloženy do Dynamického pole
       Čtení dat probíhá pomocí oddělovače “,”
-   Do steného souboru probíhá I zápis pomocí PrintWriter
+      Do steného souboru probíhá I zápis pomocí PrintWriter
    * Binární soubor se studenty:
    Data jsou do binárního souboru zapisována pomocí DataOutputStream. Porgram zapisuje proměnné ID a    hodnoceni. 
+   - - - -
+## Popis fungovaní externí knihovny ##  
+V své semestrální práce jsem přidal soubor itext.jar do Libraries, pomocí něj lze převádět text do formátu pdf. V mém případě v menu aplikace uvádím možnost exportovat všechny otázky, které se v testu mohou vyskytovat do souboru ve formátu pdf.
 
 
 
