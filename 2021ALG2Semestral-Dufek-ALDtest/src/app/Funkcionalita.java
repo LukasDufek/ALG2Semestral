@@ -24,25 +24,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import ui.UI;
+import ui.Main;
 import utils.TestInterface;
 
 /**
- *
+ * Trida tvori hlavni logiku aplikace
  * @author Lukáš
  */
-public class Main implements TestInterface {
+public class Funkcionalita implements TestInterface {
 
-    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/M/d");
-
-    public Main() {
+    public Funkcionalita() {
     }
     public static Scanner sc = new Scanner(System.in);
 
+    /**
+     * metoda prevadi ArrayList na String pomoci StringBuilder
+     *
+     * @param array
+     * @return String
+     */
     @Override
-    public String zobrazeni(ArrayList array) { //zobrazi se i correctAnswer //do hlavicky metody arraylist
+    public String zobrazeni(ArrayList array) {
         StringBuilder sb = new StringBuilder();
-        //otazky.forEach(o -> sb.append(o.toString()));
         for (Object o : array) {
             sb.append(o + "\n");
             //
@@ -51,11 +54,13 @@ public class Main implements TestInterface {
     }
 
     /**
+     * metoda nejdrive inicializuje noveho studenta pote danemu studentovi zada
+     * test vyhodnoti jej prida do pole k ostatnim studentum nakonec vytvori
+     * prislusne soubory
      *
      * @param otazky
      * @param studenti
      * @return
-     * @throws IOException
      */
     @Override
     public ArrayList<Student> studentPiseTest(ArrayList<Otazka> otazky, ArrayList<Student> studenti) {
@@ -63,6 +68,7 @@ public class Main implements TestInterface {
         int ID = 0, rocnik = 0;
         String jmeno = null, prijmeni = null;
         Student s = null;
+        //zamichani otazek
         Collections.shuffle(otazky);
 
         LocalDate denTestu = null;
@@ -79,7 +85,7 @@ public class Main implements TestInterface {
 
         s = new Student(ID, jmeno, prijmeni, rocnik, 0, denTestu);
         s.setDenTestu(LocalDate.now());
-        t.novyStudent(s);
+        s.toString();
         int znamka = 0;
         int body = 0;
         String answer;
@@ -87,7 +93,6 @@ public class Main implements TestInterface {
         for (int i = 0; i < 10; i++) {
             System.out.print(i + 1 + ".");
             System.out.print(otazky.get(i).toString());
-            //System.out.println("Vase odpoved je ");
             answer = sc.next();
             if (answer.equalsIgnoreCase(otazky.get(i).getCorrectAnswer())) {
                 System.out.println("Správná odpověď \n");
@@ -101,8 +106,7 @@ public class Main implements TestInterface {
 
         znamka = t.dejZnamku(body);
         s.setHodnoceni(znamka);
-        System.out.println("Tvoje znamka je: " + znamka);
-        System.out.println(s.toString());
+        System.out.println("Tvoje hodnocení je: " + znamka);       
         studenti = t.kOstanimPridejStudenta(s, studenti);
 
         int m = studenti.size();
@@ -118,19 +122,22 @@ public class Main implements TestInterface {
         try {
             t.ulozVysledky(studenti);
         } catch (IOException ex) {
-            //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error");
         }
         try {
             t.ulozVysledkyB(studentiB);
         } catch (IOException ex) {
-            // Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error");
         }
 
         return studenti;
     }
 
+    /**
+     * serazeni studentu podle rocniku
+     *
+     * @param studenti
+     */
     @Override
     public void seradPodleRocniku(ArrayList<Student> studenti) {
         ComparatorPodleRocniku CPR = new ComparatorPodleRocniku();
@@ -138,27 +145,41 @@ public class Main implements TestInterface {
 
     }
 
+    /**
+     * serazeni studentu podle prijmeni
+     *
+     * @param studenti
+     */
     @Override
-    public void seradPodlePrijmeni(ArrayList<Student> studenti) { //annonymni trida
+    public void seradPodlePrijmeni(ArrayList<Student> studenti) {
         Collections.sort(studenti, new Comparator<Student>() {
             @Override
             public int compare(Student o1, Student o2) {
-                Collator col = Collator.getInstance(new Locale("cs", "CZ")); //kvuli prijmenim jako napr: Šimon
+                Collator col = Collator.getInstance(new Locale("cs", "CZ"));
+                //kvuli prijmenim jako napr: Šimon
                 return col.compare(o1.getPrijmeni(), o2.getPrijmeni());
             }
         });
     }
 
+    /**
+     * serazeni studentu podle hodnoceni
+     *
+     * @param studenti
+     */
     @Override
     public void seradPodleHodnoceni(ArrayList<Student> studenti) {
-        Collections.sort(studenti); //compareTo
+        Collections.sort(studenti);
     }
 
-    public final String FONT = "resources/fonts/FreeSans.ttf";
-
+    /**
+     * vytvoreni pdf souboru s otazkami
+     *
+     * @param otazky
+     */
     @Override
     public void vytvorPdf(ArrayList<Otazka> otazky) {
-
+        final String FONT = "resources/fonts/FreeSans.ttf";
         String input = zobrazeni(otazky);
         Document document = new Document();
         try {
@@ -175,6 +196,11 @@ public class Main implements TestInterface {
         }
     }
 
+    /**
+     * hledani zadaneho vyrazu v souboru otazky
+     *
+     * @param otazky
+     */
     @Override
     public void hledejVyraz(ArrayList<Otazka> otazky) {
         String input = zobrazeni(otazky);

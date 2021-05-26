@@ -4,7 +4,7 @@ import app.Student;
 import java.util.Comparator;
 
 /**
- *
+ * Trida slouzici pro serazeni podle rocniku
  * @author Lukáš
  */
 public class ComparatorPodleRocniku implements Comparator<Student>{

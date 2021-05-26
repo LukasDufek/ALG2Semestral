@@ -30,7 +30,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//import java.util.regex.Pattern;
 /**
  *
  * @author Lukáš
@@ -39,46 +38,41 @@ public class Testy {
 
     static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-M-d");
     private ArrayList<Student> studenti;
-    private ArrayList<Student> studentiB;
     private ArrayList<Otazka> otazky;
-    private ArrayList<String> choices;
 
-    private int vysledek;
-    private LocalDate denTestu;
 
     public Testy() {
-        studenti = new ArrayList<>(); //do arrayListu prijde soubor se studentama
+        studenti = new ArrayList<>();
         otazky = new ArrayList<>();
-        choices = new ArrayList<>();
     }
 
     /**
-     * deklaruj studenta dej mu test nastav jeho hodnoceni pridej ho do pole
-     *
+     * Pridani studenta do ArrayListu
      * @param s
-     * @return
+     * @param studenti
+     * @return 
      */
-    public void novyStudent(Student s) {
-        LocalDate denTestu = null;
-        //denTestu.format(dtf);
-        int hodnoceni = 0;
-        s = new Student(s.getID(), s.getJmeno(), s.getPrijmeni(), s.getRocnik(), hodnoceni, denTestu);
-        //s.setDenTestu(LocalDate.now());
-        s.toString();
-    }
-
     public ArrayList<Student> kOstanimPridejStudenta(Student s, ArrayList<Student> studenti) {
         studenti.add(s);
 
         return studenti;
     }
 
+    /**
+     * za kazdou spravnou odpoved se prida 10 bodu
+     * @return suma bodu
+     */
     public int ziskaneBody() {
         int sum = 0;
         sum += 10;
         return sum;
     }
 
+    /**
+     * podle poctu bodu se udeli znamka
+     * @param body
+     * @return 
+     */
     public int dejZnamku(int body) {
         int znamka = 4;
         if (body >= 90) {
@@ -123,46 +117,12 @@ public class Testy {
         return otazky;
     }
 
-//metody pro zobrazovani    
-    public String zobrazeni(ArrayList array) { //zobrazi se i correctAnswer //do hlavicky metody arraylist
-        StringBuilder sb = new StringBuilder();
-        for (Object o : array) {
-            sb.append(o + "\n");
-            //
-        }
-
-        return sb.toString();
-
-    }
-
-    public String zobrazeni() { //zobrazeni studentu s vysledky
-        StringBuilder sb = new StringBuilder();
-        for (Student s : studenti) {
-            sb.append(s + "\n");
-        }
-        return sb.toString();
-    }
-
-    public void seradPodleRocniku(ArrayList<Student> studenti) {
-        ComparatorPodleRocniku CPR = new ComparatorPodleRocniku();
-        Collections.sort(studenti, CPR);
-
-    }
-
-    public void seradPodlePrijmeni(ArrayList<Student> studenti) { //annonymni trida
-        Collections.sort(studenti, new Comparator<Student>() {
-            @Override
-            public int compare(Student o1, Student o2) {
-                Collator col = Collator.getInstance(new Locale("cs", "CZ")); //kvuli prijmenim jako napr: Šimon
-                return col.compare(o1.getPrijmeni(), o2.getPrijmeni());
-            }
-        });
-    }
-
-    public void seradPodleHodnoceni(ArrayList<Student> studenti) {
-        Collections.sort(studenti); //compareTo
-    }
-
+    /**
+     * metoda nacte studenty ze souboru do ArrayListu
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public ArrayList<Student> nactiStudenty() throws FileNotFoundException, IOException { //vezme soubor se studenty
 
         try (BufferedReader br = new BufferedReader(new FileReader(new File("StudentiALGSemestral.csv")))) {
@@ -192,6 +152,11 @@ public class Testy {
 
     }
 
+    /**
+     * Metoda ulozi vysledky se studenty do souboru
+     * @param studenti
+     * @throws IOException 
+     */
     public void ulozVysledky(ArrayList<Student> studenti) throws IOException {
 
         File slozkaHodnoceni = new File("OutputData\\hodnoceni");
@@ -213,6 +178,11 @@ public class Testy {
         }
     }
 
+    /**
+     * Metoda uklada vysledky do binarniho souboru, ale pouze ID a hodnoceni studenta
+     * @param sBin
+     * @throws IOException 
+     */
     public void ulozVysledkyB(int[][] sBin) throws IOException { //pro binarni soubor
 
         File slozkaHodnoceni = new File("OutputData\\hodnoceni");
@@ -235,175 +205,5 @@ public class Testy {
         }
     }
 
-    public void toPDF(String input) {
-        Document document = new Document();
-
-        try {
-
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Otazky.pdf"));
-
-            document.open();
-            document.add(new Paragraph(input));
-
-            document.close();
-            writer.close();
-
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public final String FONT = "resources/fonts/FreeSans.ttf";
-
-    public void createPdf(String input) {
-        Document document = new Document();
-        try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Otazky.pdf"));
-            document.open();
-            Font f1 = FontFactory.getFont(FONT, BaseFont.HELVETICA, true);
-            document.add(new Paragraph(input, f1));
-
-
-            document.close();
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /*
-
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        Testy t = new Testy();
-        ArrayList<Otazka> otazky = new ArrayList<>();
-        ArrayList<Student> studenti = new ArrayList<>();
-        studenti = t.nactiStudenty();
-        otazky = t.nacteniTestu();
-        LocalDate denTestu = null; //nejak vymyslet
-        Student s = new Student(sc.nextInt(), sc.next(), sc.next(), sc.nextInt(), 0, denTestu);
-        s.setDenTestu(LocalDate.now());
-        t.novyStudent(s);
-        //pro kontrolu      
-        //System.out.println(s);
-        Collections.shuffle(otazky);
-
-        int znamka = 0;
-        int body = 0;
-        String answer;
-
-        for (int i = 0; i < 3; i++) {
-            //System.out.println("Otazka");
-            System.out.print(otazky.get(i).toString());
-            //System.out.println("Vase odpoved je ");
-            answer = sc.next();
-            if (answer.equalsIgnoreCase(otazky.get(i).getCorrectAnswer())) {
-                System.out.println("Spravne \n");
-                body += t.ziskaneBody();
-
-            } else {
-                System.out.println("Spatne \n");
-            }
-
-        }
-
-        znamka = t.dejZnamku(body);
-        s.setHodnoceni(znamka);
-        //System.out.println("Tvoje hodnoceni je: " + znamka);
-        studenti = t.kOstanimPridejStudenta(s, studenti);
-
-        /*
-        for (Student student : studenti) {
-            int i=0;
-            String radka= student.toString();
-            String [] podretezce = radka.split("[-]");
-            String MonthAndDay= ("|"+podretezce[i]+"|");
-            System.out.println(MonthAndDay);
-            i++;
-        }
-         
-        int m = studenti.size();
-        int[][] studentiB = new int[m][2];
-
-        int i = 0;
-
-        for (Student sB : studenti) {
-            studentiB[i][0] = sB.getID();
-            studentiB[i][1] = sB.getHodnoceni();
-            i++;
-        }
-
-        System.out.println(t.zobrazeni(studenti));
-        t.ulozVysledky(studenti);
-        t.ulozVysledkyB(studentiB);
-
-    }
-
-}
-
-     */
- /*
-        try {
-            while (true) {
-                try {
-                    t.vyhodnoceni();
-                    System.out.println(t.zobrazeniOtazek(otazky));
-                    break;
-                } catch (FileNotFoundException e) {
-                    System.out.println("Zadali jste neexistujici soubor");
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Nastal problem: " + e.getMessage());
-        }
-    
-    }
-     */
- /*
-    public static void main(String[] args) throws IOException {
-        Testy t = new Testy();
-        ArrayList<Student> studentiB = new ArrayList<>();
-        ArrayList<Student> studenti = new ArrayList<>();
-        ArrayList<Otazka> otazky = new ArrayList<>();
-        studenti = t.nactiStudenty();
-        int m= studenti.size();
-        
-        int [][] doBin= new int[m][2];
-
-        int i=0;
-        for (Student s : studenti) {
-            doBin[i][0]=s.getID();
-            doBin[i][1]=s.getHodnoceni();
-            i++;
-        }
-
-        t.seradPodleRocniku(studenti);
-        System.out.println(t.zobrazeni());
-        
-        //System.out.println(t.zobrazeniStudentu());
-        //t.ulozVysledkyB(doBin);
-
-    }
-    
-}
-     */
-    public static void main(String[] args) throws IOException {
-        Testy t = new Testy();
-        ArrayList<Otazka> otazky = new ArrayList<>();
-
-        otazky = t.nacteniTestu();
-
-        String input = t.zobrazeni(otazky);
-        //String input ="Ahoj";
-        t.toPDF(input);
-        t.createPdf(input);
-
-        
-    }
 
 }
