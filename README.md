@@ -5,6 +5,7 @@ Hlavní funkcí programu ALDtest je zadání testu s 10ti otázkami a následně
 
 - - - -
 ## Návrh řešení ##
+### Funkční specifikace ###
 1. Načíst test
 2. Načíst studenty
 3. Psát test 
@@ -19,3 +20,10 @@ Hlavní funkcí programu ALDtest je zadání testu s 10ti otázkami a následně
 8.    Zobrazit všechny otázky
 9.    Exportovat otázky do pdf souboru
 10.	Hledat zadaný výraz a jeho počet výskytů v otázkách
+- - - -
+### Popis struktury souborů ###
+   * Soubor s otázkami:  
+   Proměnné: question, correctAnswer, answerA, answerB a answerC, jsou datového typu string a            následně uložené do Dynamického pole
+   Čtení dat probíhá podle řádků nikoli pomocí oddělovače
+
+
