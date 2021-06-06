@@ -31,7 +31,7 @@ public interface TestInterface {
      * prida studenta i s hodnocenim k ostatnim
      * @return 
      */
-    public ArrayList<Student>studentPiseTest(ArrayList<Otazka> otazky, ArrayList<Student> studenti);
+    public void studentPiseTest(ArrayList<Otazka> otazky, ArrayList<Student> studenti);
     
     /**
      * 

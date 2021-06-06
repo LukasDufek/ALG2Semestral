@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import utils.TestInterface;
 
 /**
  *
@@ -32,7 +33,7 @@ public class Main {
             System.out.println("Aplikace nespuštěna");
             end = true;
         }
-        Funkcionalita f = new Funkcionalita();
+        TestInterface f = new Funkcionalita();
         
         while (!end){
 

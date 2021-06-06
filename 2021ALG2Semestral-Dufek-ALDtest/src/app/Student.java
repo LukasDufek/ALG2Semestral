@@ -73,5 +73,8 @@ public class Student implements Comparable<Student> {
         return this.hodnoceni - o.hodnoceni;
 
     }
-
+//public int compareTo2(Student o) {
+//        return o.hodnoceni - this.hodnoceni;
+//
+//    }
 }

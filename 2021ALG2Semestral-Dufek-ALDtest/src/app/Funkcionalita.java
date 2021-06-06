@@ -29,6 +29,7 @@ import utils.TestInterface;
 
 /**
  * Trida tvori hlavni logiku aplikace
+ *
  * @author Lukáš
  */
 public class Funkcionalita implements TestInterface {
@@ -63,7 +64,7 @@ public class Funkcionalita implements TestInterface {
      * @return
      */
     @Override
-    public ArrayList<Student> studentPiseTest(ArrayList<Otazka> otazky, ArrayList<Student> studenti) {
+    public void studentPiseTest(ArrayList<Otazka> otazky, ArrayList<Student> studenti) {
         Testy t = new Testy();
         int ID = 0, rocnik = 0;
         String jmeno = null, prijmeni = null;
@@ -106,7 +107,7 @@ public class Funkcionalita implements TestInterface {
 
         znamka = t.dejZnamku(body);
         s.setHodnoceni(znamka);
-        System.out.println("Tvoje hodnocení je: " + znamka);       
+        System.out.println("Tvoje hodnocení je: " + znamka);
         studenti = t.kOstanimPridejStudenta(s, studenti);
 
         int m = studenti.size();
@@ -130,7 +131,6 @@ public class Funkcionalita implements TestInterface {
             System.out.println("Error");
         }
 
-        return studenti;
     }
 
     /**
@@ -170,6 +170,7 @@ public class Funkcionalita implements TestInterface {
     @Override
     public void seradPodleHodnoceni(ArrayList<Student> studenti) {
         Collections.sort(studenti);
+
     }
 
     /**
