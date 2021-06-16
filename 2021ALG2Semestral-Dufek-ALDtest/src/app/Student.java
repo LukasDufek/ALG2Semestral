@@ -59,7 +59,7 @@ public class Student implements Comparable<Student> {
 
     @Override
     public String toString() {
-        return String.format("Student: %5d%13s%15s %d.rocnik, hodnoceni:%d, psal test dne:%10s", ID, jmeno, prijmeni, rocnik, hodnoceni, denTestu);
+        return String.format("Student: %5d%13s%15s %d.rocnik, hodnoceni:%d, psal/a test dne:%10s", ID, jmeno, prijmeni, rocnik, hodnoceni, denTestu);
 
     }
 

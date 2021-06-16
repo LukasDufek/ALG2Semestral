@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import utils.TestInterface;
 
 /**
@@ -17,72 +19,129 @@ import utils.TestInterface;
  */
 public class Main {
 
-
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
         Testy t = new Testy();
         ArrayList<Otazka> otazky = new ArrayList<>();
         ArrayList<Student> studenti = new ArrayList<>();
-        boolean end = false;
-        try{
-        studenti = t.nactiStudenty();
-        otazky = t.nacteniTestu();
-        }catch(FileNotFoundException e){
-            System.out.println("Tato aplikace potřebuje vstupní soubory");
-            System.out.println("Aplikace nespuštěna");
-            end = true;
-        }
-        TestInterface f = new Funkcionalita();
         
-        while (!end){
+        //Student s;
+        boolean end = false;
+
+        TestInterface f = new Funkcionalita();
+
+        while (!end) {
 
             displayMenu();
             System.out.println("Zadej volbu");
-            String choice = sc.next(); 
+            String choice = sc.next();
             switch (choice) {
                 case "0":
                     System.out.println("Aplikace ukončena");
                     end = true;
                     break;
                 case "1":
-                    f.studentPiseTest(otazky, studenti);
+                    otazky = t.nacteniTestu();
+                    if (studenti == null) {
+                        try {
+                            studenti = t.nactiStudenty();
+                        } catch (FileNotFoundException e) {
+                            System.out.println("Tato aplikace potřebuje vstupní soubory");
+                            System.out.println("Aplikace nespuštěna");
+                            end = true;
+                        }
+                    } else {
+                        f.studentPiseTest(otazky, studenti);
+                    }
+
                     break;
                 case "2":
+                    try {
+                        studenti = t.nactiStudenty();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Tato aplikace potřebuje vstupní soubory");
+                        System.out.println("Aplikace nespuštěna");
+                        end = true;
+                    }
                     System.out.println(f.zobrazeni(studenti));
+
                     break;
                 case "3":
+                    try {
+                        studenti = t.nactiStudenty();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Tato aplikace potřebuje vstupní soubory");
+                        System.out.println("Aplikace nespuštěna");
+                        end = true;
+                    }
                     f.seradPodleHodnoceni(studenti);
                     System.out.println(f.zobrazeni(studenti));
                     break;
                 case "4":
+                    try {
+                        studenti = t.nactiStudenty();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Tato aplikace potřebuje vstupní soubory");
+                        System.out.println("Aplikace nespuštěna");
+                        end = true;
+                    }
                     f.seradPodlePrijmeni(studenti);
                     System.out.println(f.zobrazeni(studenti));
                     break;
                 case "5":
+                    try {
+                        studenti = t.nactiStudenty();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Tato aplikace potřebuje vstupní soubory");
+                        System.out.println("Aplikace nespuštěna");
+                        end = true;
+                    }
                     f.seradPodleRocniku(studenti);
                     System.out.println(f.zobrazeni(studenti));
                     break;
                 case "6":
+                    try {
+                        otazky = t.nacteniTestu();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Tato aplikace potřebuje vstupní soubory");
+                        System.out.println("Aplikace nespuštěna");
+                        end = true;
+                    }
                     System.out.println(f.zobrazeni(otazky));
                     break;
                 case "7":
+                    try {
+                        otazky = t.nacteniTestu();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Tato aplikace potřebuje vstupní soubory");
+                        System.out.println("Aplikace nespuštěna");
+                        end = true;
+                    }
                     f.vytvorPdf(otazky);
                     break;
                 case "8":
-                    f.hledejVyraz(otazky);
+                    try {
+                        otazky = t.nacteniTestu();                
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Tato aplikace potřebuje vstupní soubory");
+                        System.out.println("Aplikace nespuštěna");
+                        end = true;
+                    } f.hledejVyraz(otazky);
+                    
                     break;
+                    
                 default:
                     System.out.println("Neplatná volba");
             }
 
         }
 
-
     }
-/**
- * zobrazeni menu
- */
+
+    /**
+     * zobrazeni menu
+     */
     public static void displayMenu() {
         System.out.println("*****************************************************************");
         System.out.println("*   Vítejte v aplikaci ALDtest                                  *");
@@ -97,6 +156,10 @@ public class Main {
         System.out.println("* 8.Najdi v otázkách výraz                                      *");
         System.out.println("* 0.Konec                                                       *");
         System.out.println("*****************************************************************");
-    
+
     }
+    
+
+    
+    
 }

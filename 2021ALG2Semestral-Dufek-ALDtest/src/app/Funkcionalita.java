@@ -65,6 +65,7 @@ public class Funkcionalita implements TestInterface {
      */
     @Override
     public void studentPiseTest(ArrayList<Otazka> otazky, ArrayList<Student> studenti) {
+        ArrayList<Student> student = new ArrayList<>(); //pokud uz je pole naplnene a potrebuju pridat jednoho
         Testy t = new Testy();
         int ID = 0, rocnik = 0;
         String jmeno = null, prijmeni = null;
@@ -75,62 +76,75 @@ public class Funkcionalita implements TestInterface {
         LocalDate denTestu = null;
 
         System.out.println("Zadej ID studenta (5ti místné číslo)");
+
         ID = sc.nextInt();
-        System.out.println("Zadej jméno studenta");
-        jmeno = sc.next();
-        System.out.println("Zadej příjmení studenta");
-        prijmeni = sc.next();
-        System.out.println("Zadej ročník studia");
-        rocnik = sc.nextInt();
-        System.out.println("***Test začíná***");
+        try {
+            if (studentUzPsal(ID, studenti)) {
+                System.out.println("Tento student už test psal, jeho výsledek je: ");
+                System.out.println(tentoStudent(ID,studenti));
 
-        s = new Student(ID, jmeno, prijmeni, rocnik, 0, denTestu);
-        s.setDenTestu(LocalDate.now());
-        s.toString();
-        int znamka = 0;
-        int body = 0;
-        String answer;
-
-        for (int i = 0; i < 10; i++) {
-            System.out.print(i + 1 + ".");
-            System.out.print(otazky.get(i).toString());
-            answer = sc.next();
-            if (answer.equalsIgnoreCase(otazky.get(i).getCorrectAnswer())) {
-                System.out.println("Správná odpověď \n");
-                body += t.ziskaneBody();
-
-            } else {
-                System.out.println("Špatná odpověď \n");
+               
+            }else{
+                
+                System.out.println("Zadej jméno studenta");
+                jmeno = sc.next();
+                System.out.println("Zadej příjmení studenta");
+                prijmeni = sc.next();
+                System.out.println("Zadej ročník studia");
+                rocnik = sc.nextInt();
+                System.out.println("***Test začíná***");
+                
+                s = new Student(ID, jmeno, prijmeni, rocnik, 0, denTestu);
+                s.setDenTestu(LocalDate.now());
+                s.toString();
+                int znamka = 0;
+                int body = 0;
+                String answer;
+                
+                for (int i = 0; i < 10; i++) {
+                    System.out.print(i + 1 + ".");
+                    System.out.print(otazky.get(i).toString());
+                    answer = sc.next();
+                    if (answer.equalsIgnoreCase(otazky.get(i).getCorrectAnswer())) {
+                        System.out.println("Správná odpověď \n");
+                        body += t.ziskaneBody();
+                        
+                    } else {
+                        System.out.println("Špatná odpověď \n");
+                    }
+                    
+                }
+                
+                
+                znamka = t.dejZnamku(body);
+                s.setHodnoceni(znamka);
+                System.out.println("Tvoje hodnocení je: " + znamka);
+                studenti = t.kOstanimPridejStudenta(s, studenti);
+                
+                int m = studenti.size();
+                int[][] studentiB = new int[m][2];
+                
+                int i = 0;
+                
+                //for (Student sB : studenti) {
+                studentiB[i][0] = s.getID();
+                studentiB[i][1] = s.getHodnoceni();
+                i++;
+                
+                try {
+                    t.ulozVysledky(s);
+                } catch (IOException ex) {
+                    System.out.println("Chyba pri nacitani souboru");
+                }
+                try {
+                    t.ulozVysledkyB(studentiB);
+                } catch (IOException ex) {
+                    System.out.println("Chyba pri nacitani souboru");
+                }
             }
-
-        }
-
-        znamka = t.dejZnamku(body);
-        s.setHodnoceni(znamka);
-        System.out.println("Tvoje hodnocení je: " + znamka);
-        studenti = t.kOstanimPridejStudenta(s, studenti);
-
-        int m = studenti.size();
-        int[][] studentiB = new int[m][2];
-
-        int i = 0;
-
-        for (Student sB : studenti) {
-            studentiB[i][0] = sB.getID();
-            studentiB[i][1] = sB.getHodnoceni();
-            i++;
-        }
-        try {
-            t.ulozVysledky(studenti);
         } catch (IOException ex) {
-            System.out.println("Error");
+            Logger.getLogger(Funkcionalita.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            t.ulozVysledkyB(studentiB);
-        } catch (IOException ex) {
-            System.out.println("Error");
-        }
-
     }
 
     /**
@@ -220,6 +234,33 @@ public class Funkcionalita implements TestInterface {
         } else {
             System.out.println("Vyraz " + regexPattern + " v textu nalezen " + i + "krát");
         }
+        
+    }
+    
+    
+    public boolean studentUzPsal(int ID, ArrayList<Student> studenti) throws IOException{
+        Testy t = new Testy();
+         studenti = t.nactiStudenty();
+        for (Student student : studenti) {
+            if(student.getID()==ID){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public String tentoStudent(int ID, ArrayList<Student> studenti) throws IOException{
+        Testy t = new Testy();
+        studenti = t.nactiStudenty();
+        boolean tmp;
+        tmp=studentUzPsal(ID, studenti);
+        
+        for (Student student : studenti) {
+            if(tmp==true && student.getID()==ID ){
+                return student.toString();
+            }
+        }
+        return "";
     }
 
 }

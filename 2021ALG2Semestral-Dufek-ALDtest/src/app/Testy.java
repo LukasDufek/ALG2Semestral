@@ -101,7 +101,6 @@ public class Testy {
         String question;
         String answerA, answerB, answerC;
         String correctAnswer;
-
         while (sc.hasNext()) {
             question = sc.nextLine();
             correctAnswer = sc.nextLine();
@@ -125,8 +124,8 @@ public class Testy {
      */
     public ArrayList<Student> nactiStudenty() throws FileNotFoundException, IOException { //vezme soubor se studenty
 
-        try (BufferedReader br = new BufferedReader(new FileReader(new File("StudentiALGSemestral.csv")))) {
-            String radek;
+        try (BufferedReader br = new BufferedReader(new FileReader(new File("OutputData" + File.separator +"StudentiALGSemestral.csv")))) {
+            String radek=null;
             String[] parts;
             String jmeno, prijmeni;
             int ID, rocnik;
@@ -134,6 +133,108 @@ public class Testy {
             int hodnoceni;
             LocalDate denTestu;
             while ((radek = br.readLine()) != null) { //vraci string
+                parts = radek.split(" ");
+                ID = Integer.parseInt(parts[0]);
+                //String[] firstLast = parts[1].split(" ");
+                jmeno = parts[1];
+                prijmeni = parts[2];
+                rocnik = Integer.parseInt(parts[3]);
+                hodnoceni = Integer.parseInt(parts[4]);
+                denTestu = LocalDate.parse(parts[5], dtf);
+
+                s = new Student(ID, jmeno, prijmeni, rocnik, hodnoceni, denTestu);
+                studenti.add(s);
+
+            }
+            br.close();
+        }
+        return studenti;
+
+    }
+
+    /**
+     * Metoda ulozi vysledky se studenty do souboru
+     * @param studenti
+     * @throws IOException 
+     */
+    public void ulozVysledky(Student s) throws IOException {
+
+        File slozkaHodnoceni = new File("OutputData");
+        if (!slozkaHodnoceni.exists()) {
+            slozkaHodnoceni.mkdir();
+        }
+        File souborHodnoceni = new File("OutputData" + File.separator + "StudentiALGSemestral.csv");
+        
+//        if (!souborHodnoceni.exists()) {
+//            souborHodnoceni.createNewFile();
+//
+//        }
+
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(souborHodnoceni, true)))) { //zapis na konec dat
+            String v;
+            //for (Student s : studenti) {
+                //v = String.format("%5d %10s %15s %d %d %10s", s.getID(), s.getJmeno(), s.getPrijmeni(), s.getRocnik(), s.getHodnoceni(), s.getDenTestu().format(dtf));
+                v = ""+s.getID()+" "+ s.getJmeno()+" "+ s.getPrijmeni()+" "+ s.getRocnik()+" "+ s.getHodnoceni()+" "+ s.getDenTestu().format(dtf);
+                pw.println(v);
+            
+            pw.close();
+        }
+        
+    }
+
+    /**
+     * Metoda uklada vysledky do binarniho souboru, ale pouze ID a hodnoceni studenta
+     * @param sBin
+     * @throws IOException 
+     */
+    public void ulozVysledkyB(int[][] sBin) throws IOException { //pro binarni soubor
+
+        File slozkaHodnoceni = new File("OutputData");
+        if (!slozkaHodnoceni.exists()) {
+            slozkaHodnoceni.mkdir();
+        }
+        File souborHodnoceni = new File("OutputData" + File.separator + "Studenti2021.dat");
+        //neni potreba pri zapise souboru
+        if (!souborHodnoceni.exists()) {
+            souborHodnoceni.createNewFile();
+
+        }
+
+        try (DataOutputStream out = new DataOutputStream(new FileOutputStream(souborHodnoceni, true))) {
+            for (int i = 0; i < sBin.length; i++) {
+                int ID = sBin[i][0];
+                int hodnoceni = sBin[i][1];
+                out.writeInt(ID);
+                out.writeInt(hodnoceni);
+            }
+        }
+    }
+    
+    /*
+    public void ulozVysledkyTry(ArrayList<Student> studenti) throws IOException {
+
+        File slozkaHodnoceni = new File("OutputData");
+        if (!slozkaHodnoceni.exists()) {
+            slozkaHodnoceni.mkdir();
+        }
+        File souborHodnoceni = new File("Studenti2021.txt");
+        
+//        if (!souborHodnoceni.exists()) {
+//            souborHodnoceni.createNewFile();
+//
+//        }
+
+
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(souborHodnoceni, true)))) { //zapis na konec dat
+            String radek = null;
+            String[] parts;
+            String jmeno, prijmeni;
+            int ID, rocnik;
+            Student s;
+            int hodnoceni;
+            LocalDate denTestu;
+            while ( (radek = pw.read()) != 0) 
+            { //vraci string
                 parts = radek.split(",");
                 ID = Integer.parseInt(parts[0]);
                 String[] firstLast = parts[1].split(" ");
@@ -147,63 +248,10 @@ public class Testy {
                 studenti.add(s);
 
             }
-        }
-        return studenti;
-
-    }
-
-    /**
-     * Metoda ulozi vysledky se studenty do souboru
-     * @param studenti
-     * @throws IOException 
-     */
-    public void ulozVysledky(ArrayList<Student> studenti) throws IOException {
-
-        File slozkaHodnoceni = new File("OutputData\\hodnoceni");
-        if (!slozkaHodnoceni.exists()) {
-            slozkaHodnoceni.mkdir();
-        }
-        File souborHodnoceni = new File("OutputData\\hodnoceni" + File.separator + "Studenti2021.txt");
-        if (!souborHodnoceni.exists()) {
-            souborHodnoceni.createNewFile();
-
-        }
-
-        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(souborHodnoceni)))) {
-            String v;
-            for (Student s : studenti) {
-                v = String.format("%5d %10s %15s %d %2d %15s", s.getID(), s.getJmeno(), s.getPrijmeni(), s.getRocnik(), s.getHodnoceni(), s.getDenTestu().format(dtf));
-                pw.println(v);
-            }
-        }
-    }
-
-    /**
-     * Metoda uklada vysledky do binarniho souboru, ale pouze ID a hodnoceni studenta
-     * @param sBin
-     * @throws IOException 
-     */
-    public void ulozVysledkyB(int[][] sBin) throws IOException { //pro binarni soubor
-
-        File slozkaHodnoceni = new File("OutputData\\hodnoceni");
-        if (!slozkaHodnoceni.exists()) {
-            slozkaHodnoceni.mkdir();
-        }
-        File souborHodnoceni = new File("OutputData\\hodnoceni" + File.separator + "Studenti2021.dat");
-        if (!souborHodnoceni.exists()) {
-            souborHodnoceni.createNewFile();
-
-        }
-
-        try (DataOutputStream out = new DataOutputStream(new FileOutputStream(souborHodnoceni, true))) {
-            for (int i = 0; i < sBin.length; i++) {
-                int ID = sBin[i][0];
-                int hodnoceni = sBin[i][1];
-                out.write(ID);
-                out.write(hodnoceni);
-            }
-        }
     }
 
 
+}
+*/
+    
 }
