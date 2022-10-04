@@ -45,7 +45,12 @@ public class Otazka {
         return question + "\n" + answerA + "\n" + answerB + "\n" + answerC +"\n";
     }
     
-    
+    public boolean isCorrectAnswer(String answer){
+        if(answer==this.correctAnswer){
+            return true;
+        }
+        return false;
+    }
     
     
     
